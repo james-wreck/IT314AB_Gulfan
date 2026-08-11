@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
                   const SizedBox(height: 15),
 
                   const Text(
-                    "Ivan Vincent C. Villareal",
+                    "James Laurence C. Gulfan",
                     style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                   ),
 
