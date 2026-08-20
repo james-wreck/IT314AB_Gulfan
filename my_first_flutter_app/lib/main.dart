@@ -15,6 +15,8 @@ List<Map<String, dynamic>> profiles = [
     'studentID': "24060149",
     'email': "james@gmail.com",
     'favSubject': "Programming",
+    'pressed': false,
+    'favorite': false,
   },
   {
     'image': 'assets/john.jfif',
@@ -25,6 +27,8 @@ List<Map<String, dynamic>> profiles = [
     'studentID': "4932-1224",
     'email': "john@gmail.com",
     'favSubject': "Database",
+    'pressed': false,
+    'favorite': false,
   },
   {
     'image': 'assets/brian.jfif',
@@ -35,6 +39,8 @@ List<Map<String, dynamic>> profiles = [
     'studentID': "3003-2044",
     'email': "brian@gmail.com",
     'favSubject': "Web Development",
+    'pressed': false,
+    'favorite': false,
   },
   {
     'image': 'assets/fred.jfif',
@@ -45,6 +51,8 @@ List<Map<String, dynamic>> profiles = [
     'studentID': "1302-6953",
     'email': null,
     'favSubject': "Programming",
+    'pressed': false,
+    'favorite': false,
   },
   {
     'image': 'assets/roger.jfif',
@@ -55,6 +63,8 @@ List<Map<String, dynamic>> profiles = [
     'studentID': "2049-232",
     'email': "roger@gmail.com",
     'favSubject': "Networking",
+    'pressed': false,
+    'favorite': false,
   },
   {
     'image': 'assets/ds.webp',
@@ -65,104 +75,275 @@ List<Map<String, dynamic>> profiles = [
     'studentID': "2309-2060",
     'email': "tommy@gmail.com",
     'favSubject': "Cybersecurity",
-  }
+    'pressed': false,
+    'favorite': false,
+  },
 ];
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+
       home: Scaffold(
         backgroundColor: Colors.blueGrey,
+
         appBar: AppBar(
           title: const Text("My First Flutter Application"),
           backgroundColor: Colors.teal,
         ),
+
         body: Center(
           child: Padding(
             padding: const EdgeInsets.all(20.0),
+
             child: ListView.builder(
               itemCount: profiles.length,
+
               itemBuilder: (context, index) {
                 final profile = profiles[index];
 
-                return Card(
-                  margin: const EdgeInsets.all(20),
-                  child: Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Image.asset(
-                          profile['image'],
-                          width: 100,
-                          height: 100,
-                        ),
-                        const SizedBox(height: 15),
-                        Text(
-                          profile['name'] ?? "Name: Empty",
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                            fontSize: 22,
-                            fontWeight: FontWeight.bold,
+                return GestureDetector(
+                  onTap: () {
+                    print(
+                      "Student Card Tapped: ${profile['name']}",
+                    );
+                  },
+
+                  child: Card(
+                    margin: const EdgeInsets.all(20),
+
+                    color: profile['favorite']
+                        ? Colors.amber[100]
+                        : Colors.white,
+
+                    child: Padding(
+                      padding: const EdgeInsets.all(20),
+
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+
+                        children: [
+
+                          // IMAGE
+                          Image.asset(
+                            profile['image'],
+                            width: 100,
+                            height: 100,
                           ),
-                        ),
-                        const SizedBox(height: 10),
-                        Text(
-                          profile['courseSection'] ?? "Course: Empty",
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                            fontSize: 18,
+
+                          const SizedBox(height: 15),
+
+                          // NAME
+                          Text(
+                            profile['name'] ?? "Name: Empty",
+                            textAlign: TextAlign.center,
+
+                            style: const TextStyle(
+                              fontSize: 22,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          "AGE: ${profile['age'] ?? "Empty"}",
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                            fontSize: 18,
+
+                          const SizedBox(height: 10),
+
+                          // COURSE AND SECTION
+                          Text(
+                            profile['courseSection']
+                                ?? "Course: Empty",
+
+                            textAlign: TextAlign.center,
+
+                            style: const TextStyle(
+                              fontSize: 18,
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 10),
-                        Text(
-                          "Hobby : ${profile['hobby'] ?? "Empty"}",
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
+
+                          const SizedBox(height: 8),
+
+                          // AGE
+                          Text(
+                            "AGE: ${profile['age'] ?? "Empty"}",
+
+                            textAlign: TextAlign.center,
+
+                            style: const TextStyle(
+                              fontSize: 18,
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 10),
-                        Text(
-                          "studentID : ${profile['studentID'] ?? "Empty"}",
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                            fontSize: 18,
+
+                          const SizedBox(height: 10),
+
+                          // HOBBY
+                          Text(
+                            "Hobby : ${profile['hobby'] ?? "Empty"}",
+
+                            textAlign: TextAlign.center,
+
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 10),
-                        Text(
-                          "email : ${profile['email'] ?? "Empty"}",
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                            fontSize: 18,
+
+                          const SizedBox(height: 10),
+
+                          // STUDENT ID
+                          Text(
+                            "studentID : "
+                            "${profile['studentID'] ?? "Empty"}",
+
+                            textAlign: TextAlign.center,
+
+                            style: const TextStyle(
+                              fontSize: 18,
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 10),
-                        Text(
-                          "Favorite Subject : ${profile['favSubject'] ?? "Empty"}",
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                            fontSize: 18,
+
+                          const SizedBox(height: 10),
+
+                          // EMAIL
+                          Text(
+                            "email : "
+                            "${profile['email'] ?? "Empty"}",
+
+                            textAlign: TextAlign.center,
+
+                            style: const TextStyle(
+                              fontSize: 18,
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 10),
-                      ],
+
+                          const SizedBox(height: 10),
+
+                          // FAVORITE SUBJECT
+                          Text(
+                            "Favorite Subject : "
+                            "${profile['favSubject'] ?? "Empty"}",
+
+                            textAlign: TextAlign.center,
+
+                            style: const TextStyle(
+                              fontSize: 18,
+                            ),
+                          ),
+
+                          const SizedBox(height: 15),
+
+                          // FLAG 3
+                          Text(
+                            profile['pressed']
+                                ? "Button Pressed!"
+                                : "Not Pressed",
+
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+
+                          const SizedBox(height: 10),
+
+                          // FLAG 4 - FAVORITE
+                          ElevatedButton.icon(
+                            onPressed: () {
+                              setState(() {
+                                profile['favorite'] =
+                                    !profile['favorite'];
+                              });
+
+                              print(
+                                "Favorite changed for "
+                                "${profile['name']}",
+                              );
+                            },
+
+                            icon: Icon(
+                              profile['favorite']
+                                  ? Icons.favorite
+                                  : Icons.favorite_border,
+                            ),
+
+                            label: Text(
+                              profile['favorite']
+                                  ? "Favorited"
+                                  : "Favorite",
+                            ),
+                          ),
+
+                          const SizedBox(height: 5),
+
+                          ElevatedButton(
+                            onPressed: () {
+                              showDialog(
+                                context: context,
+
+                                builder: (context) {
+                                  return AlertDialog(
+                                    title: const Text(
+                                      "Edit Student",
+                                    ),
+
+                                    content: Text(
+                                      "Ready to edit "
+                                      "${profile['name']}",
+                                    ),
+
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(
+                                            context,
+                                          );
+                                        },
+
+                                        child: const Text(
+                                          "Close",
+                                        ),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                            },
+
+                            child: const Text(
+                              "Edit",
+                            ),
+                          ),
+
+                          const SizedBox(height: 5),
+
+                          ElevatedButton(
+                            onPressed: () {
+                              setState(() {
+                                profiles.removeAt(index);
+                              });
+
+                              print(
+                                "Deleted "
+                                "${profile['name']}",
+                              );
+                            },
+
+                            child: const Text(
+                              "Delete",
+                            ),
+                          ),
+
+                          const SizedBox(height: 10),
+                        ],
+                      ),
                     ),
                   ),
                 );
