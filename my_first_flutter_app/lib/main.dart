@@ -135,7 +135,6 @@ class _MyAppState extends State<MyApp> {
 
                         children: [
 
-                          // IMAGE
                           Image.asset(
                             profile['image'],
                             width: 100,
@@ -144,7 +143,6 @@ class _MyAppState extends State<MyApp> {
 
                           const SizedBox(height: 15),
 
-                          // NAME
                           Text(
                             profile['name'] ?? "Name: Empty",
                             textAlign: TextAlign.center,
@@ -157,7 +155,6 @@ class _MyAppState extends State<MyApp> {
 
                           const SizedBox(height: 10),
 
-                          // COURSE AND SECTION
                           Text(
                             profile['courseSection']
                                 ?? "Course: Empty",
@@ -171,7 +168,6 @@ class _MyAppState extends State<MyApp> {
 
                           const SizedBox(height: 8),
 
-                          // AGE
                           Text(
                             "AGE: ${profile['age'] ?? "Empty"}",
 
@@ -184,7 +180,6 @@ class _MyAppState extends State<MyApp> {
 
                           const SizedBox(height: 10),
 
-                          // HOBBY
                           Text(
                             "Hobby : ${profile['hobby'] ?? "Empty"}",
 
@@ -198,7 +193,6 @@ class _MyAppState extends State<MyApp> {
 
                           const SizedBox(height: 10),
 
-                          // STUDENT ID
                           Text(
                             "studentID : "
                             "${profile['studentID'] ?? "Empty"}",
@@ -212,7 +206,6 @@ class _MyAppState extends State<MyApp> {
 
                           const SizedBox(height: 10),
 
-                          // EMAIL
                           Text(
                             "email : "
                             "${profile['email'] ?? "Empty"}",
@@ -226,7 +219,6 @@ class _MyAppState extends State<MyApp> {
 
                           const SizedBox(height: 10),
 
-                          // FAVORITE SUBJECT
                           Text(
                             "Favorite Subject : "
                             "${profile['favSubject'] ?? "Empty"}",
@@ -240,7 +232,6 @@ class _MyAppState extends State<MyApp> {
 
                           const SizedBox(height: 15),
 
-                          // FLAG 3
                           Text(
                             profile['pressed']
                                 ? "Button Pressed!"
@@ -254,7 +245,6 @@ class _MyAppState extends State<MyApp> {
 
                           const SizedBox(height: 10),
 
-                          // FLAG 4 - FAVORITE
                           ElevatedButton.icon(
                             onPressed: () {
                               setState(() {
