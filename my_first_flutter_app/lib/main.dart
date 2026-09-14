@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -17,6 +18,7 @@ List<Map<String, dynamic>> profiles = [
     'favSubject': "Programming",
     'pressed': false,
     'favorite': false,
+    'active': true,
   },
   {
     'image': 'assets/john.jfif',
@@ -29,6 +31,7 @@ List<Map<String, dynamic>> profiles = [
     'favSubject': "Database",
     'pressed': false,
     'favorite': false,
+    'active': true,
   },
   {
     'image': 'assets/brian.jfif',
@@ -41,6 +44,7 @@ List<Map<String, dynamic>> profiles = [
     'favSubject': "Web Development",
     'pressed': false,
     'favorite': false,
+    'active': true,
   },
   {
     'image': 'assets/fred.jfif',
@@ -53,6 +57,7 @@ List<Map<String, dynamic>> profiles = [
     'favSubject': "Programming",
     'pressed': false,
     'favorite': false,
+    'active': true,
   },
   {
     'image': 'assets/roger.jfif',
@@ -65,6 +70,7 @@ List<Map<String, dynamic>> profiles = [
     'favSubject': "Networking",
     'pressed': false,
     'favorite': false,
+    'active': true,
   },
   {
     'image': 'assets/ds.webp',
@@ -77,6 +83,7 @@ List<Map<String, dynamic>> profiles = [
     'favSubject': "Cybersecurity",
     'pressed': false,
     'favorite': false,
+    'active': true,
   },
 ];
 
@@ -88,6 +95,19 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  bool _isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+
+    Future.delayed(const Duration(seconds: 2), () {
+      setState(() {
+        _isLoading = false;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -101,11 +121,35 @@ class _MyAppState extends State<MyApp> {
           backgroundColor: Colors.teal,
         ),
 
-        body: Center(
+        body: _isLoading
+            ? const Center(
+          child: CircularProgressIndicator(),
+        )
+            : Center(
           child: Padding(
             padding: const EdgeInsets.all(20.0),
 
-            child: ListView.builder(
+            child: profiles.isEmpty
+                ? Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Icon(
+                  Icons.people_outline,
+                  size: 80,
+                ),
+
+                const SizedBox(height: 20),
+
+                const Text(
+                  "No students found",
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            )
+                : ListView.builder(
               itemCount: profiles.length,
 
               itemBuilder: (context, index) {
@@ -130,12 +174,12 @@ class _MyAppState extends State<MyApp> {
 
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment:
+                        MainAxisAlignment.center,
+                        crossAxisAlignment:
+                        CrossAxisAlignment.center,
 
                         children: [
-
-                          // IMAGE
                           Image.asset(
                             profile['image'],
                             width: 100,
@@ -144,7 +188,6 @@ class _MyAppState extends State<MyApp> {
 
                           const SizedBox(height: 15),
 
-                          // NAME
                           Text(
                             profile['name'] ?? "Name: Empty",
                             textAlign: TextAlign.center,
@@ -157,7 +200,6 @@ class _MyAppState extends State<MyApp> {
 
                           const SizedBox(height: 10),
 
-                          // COURSE AND SECTION
                           Text(
                             profile['courseSection']
                                 ?? "Course: Empty",
@@ -171,7 +213,6 @@ class _MyAppState extends State<MyApp> {
 
                           const SizedBox(height: 8),
 
-                          // AGE
                           Text(
                             "AGE: ${profile['age'] ?? "Empty"}",
 
@@ -184,9 +225,9 @@ class _MyAppState extends State<MyApp> {
 
                           const SizedBox(height: 10),
 
-                          // HOBBY
                           Text(
-                            "Hobby : ${profile['hobby'] ?? "Empty"}",
+                            "Hobby : "
+                                "${profile['hobby'] ?? "Empty"}",
 
                             textAlign: TextAlign.center,
 
@@ -198,10 +239,9 @@ class _MyAppState extends State<MyApp> {
 
                           const SizedBox(height: 10),
 
-                          // STUDENT ID
                           Text(
                             "studentID : "
-                            "${profile['studentID'] ?? "Empty"}",
+                                "${profile['studentID'] ?? "Empty"}",
 
                             textAlign: TextAlign.center,
 
@@ -212,10 +252,9 @@ class _MyAppState extends State<MyApp> {
 
                           const SizedBox(height: 10),
 
-                          // EMAIL
                           Text(
                             "email : "
-                            "${profile['email'] ?? "Empty"}",
+                                "${profile['email'] ?? "Empty"}",
 
                             textAlign: TextAlign.center,
 
@@ -226,21 +265,37 @@ class _MyAppState extends State<MyApp> {
 
                           const SizedBox(height: 10),
 
-                          // FAVORITE SUBJECT
                           Text(
                             "Favorite Subject : "
-                            "${profile['favSubject'] ?? "Empty"}",
+                                "${profile['favSubject'] ?? "Empty"}",
 
                             textAlign: TextAlign.center,
 
                             style: const TextStyle(
                               fontSize: 18,
+                            ),
+                          ),
+
+                          const SizedBox(height: 10),
+
+                          Text(
+                            profile['active']
+                                ? "Active"
+                                : "Inactive",
+
+                            textAlign: TextAlign.center,
+
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: profile['active']
+                                  ? Colors.green
+                                  : Colors.red,
                             ),
                           ),
 
                           const SizedBox(height: 15),
 
-                          // FLAG 3
                           Text(
                             profile['pressed']
                                 ? "Button Pressed!"
@@ -254,17 +309,16 @@ class _MyAppState extends State<MyApp> {
 
                           const SizedBox(height: 10),
 
-                          // FLAG 4 - FAVORITE
                           ElevatedButton.icon(
                             onPressed: () {
                               setState(() {
                                 profile['favorite'] =
-                                    !profile['favorite'];
+                                !profile['favorite'];
                               });
 
                               print(
                                 "Favorite changed for "
-                                "${profile['name']}",
+                                    "${profile['name']}",
                               );
                             },
 
@@ -296,7 +350,7 @@ class _MyAppState extends State<MyApp> {
 
                                     content: Text(
                                       "Ready to edit "
-                                      "${profile['name']}",
+                                          "${profile['name']}",
                                     ),
 
                                     actions: [
@@ -324,22 +378,23 @@ class _MyAppState extends State<MyApp> {
 
                           const SizedBox(height: 5),
 
-                          ElevatedButton(
-                            onPressed: () {
-                              setState(() {
-                                profiles.removeAt(index);
-                              });
+                          if (profile['active'])
+                            ElevatedButton(
+                              onPressed: () {
+                                setState(() {
+                                  profiles.removeAt(index);
+                                });
 
-                              print(
-                                "Deleted "
-                                "${profile['name']}",
-                              );
-                            },
+                                print(
+                                  "Deleted "
+                                      "${profile['name']}",
+                                );
+                              },
 
-                            child: const Text(
-                              "Delete",
+                              child: const Text(
+                                "Delete",
+                              ),
                             ),
-                          ),
 
                           const SizedBox(height: 10),
                         ],
@@ -355,3 +410,4 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
+
