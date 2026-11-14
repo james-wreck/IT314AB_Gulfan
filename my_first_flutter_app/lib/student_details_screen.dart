@@ -1,12 +1,33 @@
 import 'package:flutter/material.dart';
+import 'edit_student_dialog.dart';
 
-class StudentDetailsScreen extends StatelessWidget {
+class StudentDetailsScreen extends StatefulWidget {
   final Map<String, dynamic> profile;
 
   const StudentDetailsScreen({
     super.key,
     required this.profile,
   });
+
+  @override
+  State<StudentDetailsScreen> createState() => _StudentDetailsScreenState();
+}
+
+class _StudentDetailsScreenState extends State<StudentDetailsScreen> {
+  Map<String, dynamic> get profile => widget.profile;
+
+  Widget _buildImage(dynamic path) {
+    const fallback = Icon(Icons.account_circle, size: 100);
+
+    if (path == null) return fallback;
+
+    return Image.asset(
+      path.toString(),
+      width: 100,
+      height: 100,
+      errorBuilder: (context, error, stackTrace) => fallback,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,18 +45,13 @@ class StudentDetailsScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
 
             children: [
-              Image.asset(
-                profile['image'],
-                width: 100,
-                height: 100,
-              ),
+              _buildImage(profile['image']),
 
               const SizedBox(height: 15),
 
               Text(
                 profile['name'] ?? "Name: Empty",
                 textAlign: TextAlign.center,
-
                 style: const TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
@@ -46,125 +62,67 @@ class StudentDetailsScreen extends StatelessWidget {
 
               Text(
                 "Student ID: ${profile['studentID'] ?? "Empty"}",
-
-                style: const TextStyle(
-                  fontSize: 18,
-                ),
+                style: const TextStyle(fontSize: 18),
               ),
 
               const SizedBox(height: 10),
 
               Text(
                 "Course: ${profile['courseSection'] ?? "Empty"}",
-
-                style: const TextStyle(
-                  fontSize: 18,
-                ),
+                style: const TextStyle(fontSize: 18),
               ),
 
               const SizedBox(height: 10),
 
               Text(
                 "Age: ${profile['age'] ?? "Empty"}",
-
-                style: const TextStyle(
-                  fontSize: 18,
-                ),
+                style: const TextStyle(fontSize: 18),
               ),
 
               const SizedBox(height: 10),
 
               Text(
                 "Hobby: ${profile['hobby'] ?? "Empty"}",
-
-                style: const TextStyle(
-                  fontSize: 18,
-                ),
+                style: const TextStyle(fontSize: 18),
               ),
 
               const SizedBox(height: 10),
 
               Text(
                 "Email: ${profile['email'] ?? "Empty"}",
-
-                style: const TextStyle(
-                  fontSize: 18,
-                ),
+                style: const TextStyle(fontSize: 18),
               ),
 
               const SizedBox(height: 10),
 
               Text(
-                "Favorite Subject: "
-                    "${profile['favSubject'] ?? "Empty"}",
-
-                style: const TextStyle(
-                  fontSize: 18,
-                ),
+                "Favorite Subject: ${profile['favSubject'] ?? "Empty"}",
+                style: const TextStyle(fontSize: 18),
               ),
 
               const SizedBox(height: 10),
 
               Text(
-                profile['active']
-                    ? "Active"
-                    : "Inactive",
-
+                profile['active'] ? "Active" : "Inactive",
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
-                  color: profile['active']
-                      ? Colors.green
-                      : Colors.red,
+                  color: profile['active'] ? Colors.green : Colors.red,
                 ),
               ),
 
               const SizedBox(height: 15),
 
               ElevatedButton(
-                onPressed: () {
-                  showDialog(
-                    context: context,
+                onPressed: () async {
+                  final saved =
+                      await showEditStudentDialog(context, profile);
 
-                    builder: (context) {
-                      return AlertDialog(
-                        title: const Text(
-                          "Edit Student",
-                        ),
-
-
-                        content: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text("Name: ${profile['name']}"),
-                            Text("Student ID: ${profile['studentID']}"),
-                            Text("Course: ${profile['courseSection']}"),
-                            Text("Age: ${profile['age']}"),
-                            Text("Hobby: ${profile['hobby']}"),
-                            Text("Email: ${profile['email']}"),
-                            Text("Favorite Subject: ${profile['favSubject']}"),
-                          ],
-                        ),
-
-                        actions: [
-                          TextButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-
-                            child: const Text(
-                              "Close",
-                            ),
-                          ),
-                        ],
-                      );
-                    },
-                  );
+                  if (saved && mounted) {
+                    setState(() {});
+                  }
                 },
-
-                child: const Text(
-                  "Edit",
-                ),
+                child: const Text("Edit"),
               ),
             ],
           ),
