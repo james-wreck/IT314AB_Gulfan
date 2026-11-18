@@ -62,6 +62,7 @@ flutter:
   uses-material-design: true
 
   assets:
+      - .env
       - assets/download.jpg
       - assets/da.jfif
       - assets/john.jfif
