@@ -88,8 +88,7 @@ class _EnrollmentScreenState extends State<EnrollmentScreen> {
   }
 }
 
-/// Add: pick a student and a schedule (the schedule decides the subject).
-/// Edit: the student is fixed; the schedule and the status can change.
+
 class _EnrollmentForm extends StatefulWidget {
   final Enrollment? enrollment;
   const _EnrollmentForm({this.enrollment});

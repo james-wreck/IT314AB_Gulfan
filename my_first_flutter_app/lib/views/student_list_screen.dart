@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../models/student.dart';
 import '../viewmodels/student_viewmodel.dart';
+import 'student_details_screen.dart';
 import 'student_form_screen.dart';
 import 'widgets/common.dart';
 
@@ -59,6 +60,12 @@ class _StudentListScreenState extends State<StudentListScreen> {
             return Card(
               margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               child: ListTile(
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => StudentDetailsScreen(student: s),
+                  ),
+                ),
                 title: Text(s.studentName),
                 subtitle: Text(
                     'ID: ${s.studentId} | ${s.programName ?? 'No program'}'),
